@@ -34,6 +34,8 @@ public class HomeController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
+//		request.setAttribute("serverTime", formattedDate);
+		
 		return "home";	// home.jsp로 이동 메소드와 이름이 같으면 생략가능 
 	}
 	
