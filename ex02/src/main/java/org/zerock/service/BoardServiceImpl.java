@@ -23,5 +23,21 @@ public class BoardServiceImpl implements BoardService{
 		
 		return mapper.getList();
 	}
+
+	@Override
+	public void register(BoardVO board) {
+		
+		log.info("register......." + board);
+		
+		mapper.insertSelectKey(board);
+	}
+
+	@Override
+	public BoardVO get(Long bno) {
+		
+		log.info("get.......");
+		
+		return mapper.read(bno);
+	}
 	
 }
