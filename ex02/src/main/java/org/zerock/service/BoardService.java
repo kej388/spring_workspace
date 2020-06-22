@@ -9,6 +9,8 @@ public interface BoardService {
 	// 목록
 	public List<BoardVO> getList(Criteria cri);
 	
+	public int getTotal(Criteria cri);
+	
 	// 등록
 	public void register(BoardVO board);
 	
