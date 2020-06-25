@@ -1,10 +1,9 @@
 package org.zerock.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.zerock.domain.Criteria;
+import org.zerock.domain.ReplyPageDTO;
 import org.zerock.domain.ReplyVO;
 import org.zerock.mapper.ReplyMapper;
 
@@ -26,11 +25,11 @@ public class ReplyServiceImpl implements ReplyService{
 		return mapper.insert(vo);
 	}
 
-	@Override
-	public List<ReplyVO> getList(Criteria cri, Long bno) {
-		log.info("get Reply List of a Board " + bno);
-		return mapper.getListWithPaging(cri, bno);
-	}
+//	@Override
+//	public List<ReplyVO> getList(Criteria cri, Long bno) {
+//		log.info("get Reply List of a Board " + bno);
+//		return mapper.getListWithPaging(cri, bno);
+//	}
 
 	@Override
 	public ReplyVO get(Long rno) {
@@ -48,6 +47,12 @@ public class ReplyServiceImpl implements ReplyService{
 	public int remove(Long rno) {
 		log.info("remove....." + rno);
 		return mapper.delete(rno);
+	}
+
+	@Override
+	public ReplyPageDTO getListPage(Criteria cri, Long bno) {
+		
+		return new ReplyPageDTO(mapper.getCountByBno(bno), mapper.getListWithPaging(cri, bno));
 	}
 	
 }

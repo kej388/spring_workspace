@@ -14,7 +14,7 @@
 			
 			console.log(operation);
 			
-			if(operation === 'remove') {
+			/* if(operation === 'remove') {
 				
 				var removeCheck = confirm("삭제하시겠습니까?");
 				
@@ -26,7 +26,7 @@
 				
 				
 					// form의 action값을 변경
-			} else if(operation === 'list') {
+			} else  */if(operation === 'list') {
 				// move to list
 				// self.location = '/board/list';
 				formObj.attr("action", "/board/list").attr("method", "get");
@@ -105,7 +105,7 @@
                             </div>
                             
                             <button type="submit" data-oper='modify' class="btn btn-default">Modify</button>
-                            <button type="submit" data-oper='remove' class="btn btn-default">Remove</button>
+                            <!-- <button type="submit" data-oper='remove' class="btn btn-default">Remove</button> -->
                             <button type="submit" data-oper="list" class="btn btn-info">List</button>
                             </form>
             			</div>

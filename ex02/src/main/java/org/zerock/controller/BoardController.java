@@ -82,7 +82,7 @@ public class BoardController {
 	}
 	
 	// 삭제처리
-	@PostMapping("/remove")
+	@GetMapping("/remove")
 	public String remove(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri ,RedirectAttributes rttr) {
 		log.info("remove..." + bno);
 		if(service.remove(bno)) {

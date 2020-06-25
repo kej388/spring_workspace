@@ -32,7 +32,8 @@ var replyService = ( function() {
 		$.getJSON("/replies/pages/" + bno + "/" + page + ".json",
 			function(data) {
 				if(callback) {
-					callback(data);
+//					callback(data);
+					callback(data.replyCnt, data.list);
 				}
 		}).fail(function(xhr, status, err){
 			if(error){
@@ -80,6 +81,7 @@ var replyService = ( function() {
 		
 	}
 	
+	// 삭제
 	function remove(rno, callback, error) {
 		$.ajax({
 			type: 'delete',
@@ -96,12 +98,12 @@ var replyService = ( function() {
 		})
 	}
 	
+	// 수정
 	function update(reply, callback, error) {
-		console.log("rno: " + reply.rno); 
 		
 		$.ajax({
 			type:'put',
-			url : '/replies' + reply.rno,
+			url : '/replies/' + reply.rno,
 			data : JSON.stringify(reply),
 			contentType : "application/json; charset=utf-8",
 			success : function(result, status, xhr){
@@ -122,7 +124,8 @@ var replyService = ( function() {
 		getList : getList,
 		displayTime : displayTime,
 		get : get,
-		remove : remove
+		remove : remove,
+		update : update
 		};	// 속성명 : 함수명
 	
 })();
