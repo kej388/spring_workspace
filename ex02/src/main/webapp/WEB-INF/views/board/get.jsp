@@ -9,6 +9,11 @@
 	$(document).ready(function() {
 		var operForm=$("#operForm");
 		$("button[data-oper='modify']").on("click", function(e) {
+			
+			$("#checkModal").modal("show");
+			
+			
+			
 			operForm.attr("action", "/board/modify").submit();
 		})
 		
@@ -292,6 +297,40 @@
                             <button data-oper="modify" class="btn btn-default">Modify</button>
                             <button data-oper="list" class="btn btn-info">List</button>
                             <button data-oper="remove" class="btn btn-info">Remove</button>
+                            
+                            <!-- 체크 Modal --------------------------------- -->
+            				
+            				<div class="modal fade" id="checkModal" tabindex="-1" role="dialog"
+            					aria-labelledby="myModalLabel" aria-hidden="true">
+            					<div class="modal-dialog">
+            						<div class="modal-content">
+            						
+            							<!-- modal header -->
+            							<div class="modal-header">
+            								<button type="button" class="close" data-dismiss="modal"
+            									aria-hidden="ture">&times;</button>
+            								<h4 class="modal-title" id="myModalLabel">PASSWORD CHECK MODAL</h4>
+            							</div>
+            							
+            							<!-- modal body -->
+            							<div class="modal-body">
+            								<div class="form-group">
+            									<label>PASSWORD</label>
+            									<input class="form-control" name='password' value='New Reply!'>
+            								</div>
+            							</div>
+            							
+            							<!-- modal footer -->
+            							<div class="modal-footer">
+            								<button id='modalSuccessBtn' type="button" class="btn btn-warning">
+            									확인
+            								</button>
+            							</div>
+            						</div>
+            					</div>		
+            				</div>
+            				
+            				<!-- 댓글 Modal -->
                             
                             <form id='operForm' action="/board/modify" method="get">
                             	<input type="hidden" id="bno" name="bno" value='<c:out value="${board.bno}"/>'>
