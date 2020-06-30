@@ -24,7 +24,28 @@
 	}
 	
 	.uploadResult ul li img{
-		width: 20px;
+		width: 100px;
+	}
+	.bigPictureWrapper{
+		position: absolute;
+		display: none;
+		justify-content: center;
+		align-items: center;
+		top: 0%;
+		width: 100%;
+		height: 100%;
+		background-color: #BD7839;
+		z-index: 100;
+		background: rbga(255, 255, 255, 0.5);
+	}
+	.bigPicture {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.bigPicture img{
+		width: 600px;
 	}
 </style>
 </head>
@@ -41,11 +62,23 @@
 	</ul>
 </div>
 
+<div class='bigPictureWrapper'>
+	<div class='bigPicture'>
+	</div>
+</div>
+
 <button id='uploadBtn'>Upload</button>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
+function showImage(fileCallPath){
+	$(".bigPictureWrapper").css("display", "fiex").show();
+	
+	$(".bigPicture").html("<img src='/display?fileName=" + encodeURI(fileCallPath) + "'>")
+	.animate({width:'100%', height: '100%'}, 1000);
+}
+
 $(document).ready(function(){
 	var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 	var maxSize = 5242880;
@@ -119,18 +152,52 @@ $(document).ready(function(){
 				
 				var fileCallPath = encodeURIComponent( obj.uploadPath + "/" + obj.uuid + "_" + obj.fileName);
 				
-				str += "<li><a href='/download?fileName=" + fileCallPath + "'>" + "<img src='/resources/img/attach.png'>"
-					+ obj.fileName + "</a></li>";
+				var fileLink = fileCallPath.replace(new RegExp(/\\/g), "/");
+				
+				str += "<li><div><a href='/download?fileName=" + fileCallPath + "'>" + "<img src='/resources/img/attach.png'>"
+					+ obj.fileName + "</a>" + "<span style='cursor:pointer' data-file=\'" + fileCallPath + "\' data-type='file'> &times; </span></div></li>";
 			} else {
 				//str += "<li>" + obj.fileName + "</li>";
 				var fileCallPath = encodeURIComponent( obj.uploadPath + "/s_" + obj.uuid + "_" + obj.fileName);
 				
-				str += "<li><img src='/display?fileName=" + fileCallPath + "'></li>";
+				
+				var originPath = obj.uploadPath + "\\" + obj.uuid + "_" + obj.fileName;
+				console.log(originPath);
+				
+				originPath = originPath.replace(new RegExp(/\\/g), "/");
+				console.log(originPath);
+				
+				str += "<li><a href=\"javascript:showImage(\'" + originPath + "\')\"><img src='/display?fileName=" + fileCallPath + "'></a>"
+						+ "<span style='cursor:pointer' data-file=\'" + fileCallPath + "\' data-type='image'> &times; </span>" + "</li>";
 			}
 		})
 		
 		uploadResult.append(str);
 	}
+	
+	$(".bigPictureWrapper").on("click", function(e){
+		$(".bigPicture").animate({width:'0%', height: '0%'}, 1000);
+		setTimeout(function(){
+			$('.bigPictureWrapper').hide();
+		}, 1000);
+	})
+	
+	$(".uploadResult").on("click", "span", function(e){
+		var targetFile = $(this).data("file");
+		var type = $(this).data("type");
+		console.log(targetFile);
+		
+		$.ajax({
+			url: '/deleteFile',
+			data: {fileName: targetFile, type: type},
+			dataType: 'text',
+			type: 'POST',
+				success: function(result){
+					alert(result);
+				}
+		})
+		$(this).closest("li").remove(); // closest : 제일 가까운 부모태그를 찾는다.
+	})
 })
 </script>
 </body>
