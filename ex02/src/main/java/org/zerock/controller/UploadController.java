@@ -235,10 +235,12 @@ public class UploadController {
 		File file;
 		
 		try{
+			// 썸네일 or 일반파일 삭제
 			file = new File("c:\\upload\\" + URLDecoder.decode(fileName, "UTF-8"));
 			
 			file.delete();
 			
+			// 파일이 이미지이면 원래파일도 삭제
 			if(type.equals("image")) {
 				String largeFileName = file.getAbsolutePath().replace("s_", "");
 				
