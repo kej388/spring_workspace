@@ -10,4 +10,9 @@ public interface BoardAttachMapper {
 	public void delete(String uuid);
 	
 	public List<BoardAttachVO> findByBno(Long bno);
+	
+	public void deleteAll(Long bno);
+	
+	// 전날 파일목록 구하기. 일괄삭제처리에 사용
+	public List<BoardAttachVO> getOldFiles();
 }
