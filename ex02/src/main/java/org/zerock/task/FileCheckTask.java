@@ -1,11 +1,16 @@
 package org.zerock.task;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.zerock.domain.BoardAttachVO;
 import org.zerock.mapper.BoardAttachMapper;
 
 import lombok.AllArgsConstructor;
@@ -36,6 +41,10 @@ public class FileCheckTask {
 		
 		log.warn("==============================");
 		
+		List<BoardAttachVO> fileList = attachmapper.getOldFiles();
+		
+		List<Path> fileListPaths = fileList.stream().map(vo -> Paths.get("c:\\upload", vo.getUploadPath(),
+				vo.getUuid() + '_' + vo.getFileName())).collect(Collectors.toList());
 	}
 	
 	

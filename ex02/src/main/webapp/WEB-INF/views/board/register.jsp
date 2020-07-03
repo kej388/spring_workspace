@@ -140,6 +140,33 @@
 			
 		})
 		
+		$(".uploadResult").on("dragenter dragover", function(e){
+			e.preventDefault();
+		})
+		$(".uploadResult").on("drop", function(e){
+			e.preventDefault();
+			
+			var files = e.originalEvent.dataTransfer.files;
+			var formData = new FormData();
+			for(i = 0; i < files.length; i++){
+				formData.append("uploadFile", files[i]);
+			}
+			
+			$.ajax({
+				url: '/uploadAjaxAction',
+				processData: false,
+				contentType: false,
+				data: formData,
+				type: 'POST',
+				dataType: 'json',
+				success: function(result){
+					console.log(result);
+					
+					showUploadResult(result);
+				}
+			})
+		})
+		
 	})
 </script>
 
